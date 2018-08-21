@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Section 8: Asynchronous JavaScript</title>
+               
+    </head>
+
+    <body>
+        <h1>Section 8: Asynchronous JavaScript</h1>
+        
+        <script>
+
+            const second = () => {
+                console.log('Second');   
+
+                setTimeout(() => {
+                    console.log('Async Hey there');
+                }, 2000);
+            }
+            
+            const first = () => {
+                console.log('Hey there');
+                second();
+                // pamietaj ,że cały ten kod się wykona, łącznie z "the end", 
+                // setTimeout bedzie się wykonywał w tle i wykona się po poniższej consoli
+                console.log('the end');
+            }
+
+            first();
+
+            // W lekcji "The Event loop", masz dokładnie wyjaśnione jak pod spodem działa Asynchronous JavaScript
+
+            // Asynchronous JavaScript with callbacks
+
+            // tutaj chyba bedziemy używać setTimeout, zeby zasymulować to zachowanie.
+            function getRecipe() {
+                setTimeout(() => {
+                    const recipeID = [523, 883, 432, 974];
+                    console.log(recipeID);
+
+                    // ponieważ mamy tylko jeden argument w arrow function, nie musimy gow stawiać w nawiasie
+                    setTimeout( id => {
+                        const recipe = {
+                            title: 'Fresh tomato',
+                            publisher: 'Jonas'
+                        };
+                        console.log(`${id}: ${recipe.title}`);
+
+                        setTimeout(publisher => {
+                            const recipe2 = {
+                                title: 'Italian Pizza',
+                                publisher: 'Jonas'
+                            };
+                            console.log(recipe);
+                            // pierwszy parametr to czas, pozniej mozesz dodawać paramatery, które są przkeazywane do funkcji
+                        }, 1500, recipe.publisher)
+
+                    }, 1500, recipeID[2])
+                }, 1500);
+            }
+            // powyżej mamy przykład tzw. "callback hell", czyli odowłanie wewnątrz odwołania, wewnatrz odwołania.
+            // i genrealnie chujowo się z tym pracuję.
+            // Dlatego w ES6 dodali coś co nazywa się "Promises", wtedy możemy zapobiegac tzw. "callback hell"
+
+            getRecipe();
+
+        </script>
+    </body>
+</html>
